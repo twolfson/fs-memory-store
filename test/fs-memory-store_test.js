@@ -1,5 +1,6 @@
 // Load in dependencies and library
 var expect = require('chai').expect;
+var extend = require('obj-extend');
 var fixtureUtils = require('mocha-fixture-dir')(require('fixture-dir'));
 var Store = require('../');
 
@@ -10,7 +11,9 @@ fixtureUtils.init('fs-memory-store-tests');
 var storeUtils = {
   init: function (options) {
     before(function createStore () {
-      this.store = new Store(options);
+      // By default, use the temporary `fixtureUtils` directory
+      var params = extend({dir: this.dir.path}, options);
+      this.store = new Store(params);
     });
     after(function cleanupStore () {
       delete this.store;
@@ -48,7 +51,7 @@ var storeUtils = {
 describe('An `fs-memory-store`', function () {
   describe('loading a non-existent value (from memory and disk)', function () {
     fixtureUtils.mkdir({folderName: 'non-existent'});
-    storeUtils.init({directory: '/tmp/fs-memory-store-tests/non-existent'});
+    storeUtils.init();
     storeUtils.get('nothing');
 
     it('calls back with `null`', function () {

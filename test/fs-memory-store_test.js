@@ -192,15 +192,23 @@ describe('A deep object saved to memory', function () {
   });
 });
 
-describe.skip('A deep object loaded from disk', function () {
+describe('A deep object loaded from disk', function () {
   fixtureUtils.mkdir({
-    folderName: 'deep-object-disk'
+    folderName: 'deep-object-disk',
+    copyFrom: __dirname + '/test-files/deep-object-disk'
   });
   storeUtils.init();
 
   describe('when a cache-get value is modified', function () {
-    it('does not effect the cached value', function () {
+    storeUtils.get('hello');
+    before(function () {
+      this.val.nested.hai = true;
+    });
+    storeUtils.get('hello');
 
+    it('does not effect the cached value', function () {
+      expect(this.err).to.equal(null);
+      expect(this.val).to.deep.equal({nested: {data: true}});
     });
   });
 });

@@ -5,6 +5,44 @@ var Store = require('../');
 // Set up our /tmp namespace
 fixtureUtils.init('fs-memory-store-tests');
 
+// Define helper utilities for interacting with our store
+var storeUtils = {
+  init: function (options) {
+    before(function createStore () {
+      this.store = new Store(options);
+    });
+    after(function cleanupStore () {
+      delete this.store;
+    });
+  },
+  get: function (key) {
+    before(function getValue (done) {
+      var that = this;
+      this.store.get(key, function handleGet (err, val) {
+        that.err = err;
+        that.val = val;
+        done();
+      });
+    });
+    after(function cleanupValues () {
+      delete this.err;
+      delete this.val;
+    });
+  },
+  set: function (key, val) {
+    before(function setValue (done) {
+      var that = this;
+      this.store.set(key, val, function handleSet (err) {
+        that.err = err;
+        done();
+      });
+    });
+    after(function cleanupError () {
+      delete this.err;
+    });
+  }
+};
+
 // Start our tests
 describe('An `fs-memory-store`', function () {
   describe('loading a non-existent value (from memory and disk)', function () {

@@ -102,7 +102,46 @@ describe('An `fs-memory-store`', function () {
   });
 });
 
-describe('A deep object saved to memory', function () {
+// DEV: Previously, we tested loading from memory, now it is from disk
+describe('A non-existent value from disk', function () {
+  fixtureUtils.mkdir({
+    folderName: 'non-existent-disk'
+  });
+
+  describe('when written', function () {
+    storeUtils.init();
+    storeUtils.set('hello', {sun: true});
+
+    describe('and loaded from disk', function () {
+      before(function (done) {
+        var store = new Store({dir: this.dir.path});
+        var that = this;
+        store.get('hello', function (err, val) {
+          that.val = val;
+          done(err);
+        });
+      });
+
+      it('loads its value', function () {
+        expect(this.val).to.deep.equal({sun: true});
+      });
+    });
+  });
+});
+
+// DEV: This tests that our disk-serializer pairing works
+describe.skip('An existent value on disk', function () {
+  describe('when overwritten', function () {
+    describe('and loaded again', function () {
+      it('loads its value', function () {
+
+      });
+    });
+  });
+});
+
+// DEV: Assert that we do not have any contamination from either side to our in-memory cache
+describe.skip('A deep object saved to memory', function () {
   describe('when the source value is modified', function () {
     it('does not effect the cached value', function () {
 
@@ -116,23 +155,3 @@ describe('A deep object saved to memory', function () {
   });
 });
 
-// DEV: Previously, we tested loading from memory, now it is from disk
-describe.skip('A non-existent value from disk', function () {
-  describe('when written', function () {
-    describe('and loaded from disk', function () {
-      it('loads its value', function () {
-
-      });
-    });
-  });
-});
-
-describe.skip('An existent value on disk', function () {
-  describe('when overwritten', function () {
-    describe('and loaded again', function () {
-      it('loads its value', function () {
-
-      });
-    });
-  });
-});

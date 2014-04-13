@@ -91,7 +91,35 @@ describe('An `fs-memory-store`', function () {
       expect(files).to.deep.equal(['hello.json']);
     });
 
-    describe.skip('loading the value from memory', function () {
+    describe('loading the value from memory', function () {
+      storeUtils.get('hello');
+
+      it('loads its value', function () {
+        expect(this.err).to.equal(null);
+        expect(this.val).to.deep.equal({moon: true});
+      });
+    });
+  });
+});
+
+describe('A deep object saved to memory', function () {
+  describe('when the source value is modified', function () {
+    it('does not effect the cached value', function () {
+
+    });
+  });
+
+  describe('when a cache-get value is modified', function () {
+    it('does not effect the cached value', function () {
+
+    });
+  });
+});
+
+// DEV: Previously, we tested loading from memory, now it is from disk
+describe.skip('A non-existent value from disk', function () {
+  describe('when written', function () {
+    describe('and loaded from disk', function () {
       it('loads its value', function () {
 
       });

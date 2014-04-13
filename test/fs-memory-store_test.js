@@ -69,13 +69,19 @@ describe('An `fs-memory-store`', function () {
     storeUtils.get('hello');
 
     it('retrieves the value', function () {
-      console.log(this.err);
       expect(this.err).to.equal(null);
       expect(this.val).to.deep.equal({world: true});
     });
   });
 
-  describe.skip('saving a value', function () {
+  describe('saving a value', function () {
+    fixtureUtils.mkdir({
+      folderName: 'save',
+      copyFrom: __dirname + '/test-files/existent'
+    });
+    storeUtils.init();
+    storeUtils.get('hello');
+
     it('does not have any errors', function () {
 
     });
@@ -88,7 +94,17 @@ describe('An `fs-memory-store`', function () {
   });
 });
 
-describe.skip('An non-existent value from disk', function () {
+describe.skip('A non-existent value from disk', function () {
+  describe('when written', function () {
+    describe('and loaded again', function () {
+      it('loads its value', function () {
+
+      });
+    });
+  });
+});
+
+describe.skip('An existent value on disk', function () {
   describe('when overwritten', function () {
     describe('and loaded again', function () {
       it('loads its value', function () {

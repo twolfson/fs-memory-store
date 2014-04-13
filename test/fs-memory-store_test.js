@@ -128,13 +128,28 @@ describe('A non-existent value from disk', function () {
     });
   });
 });
+describe('An existent value on disk', function () {
+  fixtureUtils.mkdir({
+    folderName: 'existent-disk',
+    copyFrom: __dirname + '/test-files/existent'
+  });
 
-// DEV: This tests that our disk-serializer pairing works
-describe.skip('An existent value on disk', function () {
   describe('when overwritten', function () {
-    describe('and loaded again', function () {
-      it('loads its value', function () {
+    storeUtils.init();
+    storeUtils.set('hello', {stars: true});
 
+    describe('and loaded again', function () {
+      before(function (done) {
+        var store = new Store({dir: this.dir.path});
+        var that = this;
+        store.get('hello', function (err, val) {
+          that.val = val;
+          done(err);
+        });
+      });
+
+      it('loads its value', function () {
+        expect(this.val).to.deep.equal({stars: true});
       });
     });
   });

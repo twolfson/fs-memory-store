@@ -2,6 +2,10 @@
 
 Filesystem store with in-memory cache
 
+This was built for usage with [`eight-track`][], an HTTP fixture library. It is designed for ease-of-access while debugging. By default, items will be stored to separate `.json` files in the folder.
+
+[`eight-track`]: https://github.com/uber/eight-track
+
 ## Getting Started
 Install the module with: `npm install fs-memory-store`
 

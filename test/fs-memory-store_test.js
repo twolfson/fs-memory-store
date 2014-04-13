@@ -166,7 +166,7 @@ describe('A deep object saved to memory', function () {
     this.store.set('hello', this.obj, done);
   });
 
-  describe.skip('when the source value is modified', function () {
+  describe('when the source value is modified', function () {
     before(function () {
       this.obj.headers.hai = true;
     });

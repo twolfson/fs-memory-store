@@ -1,1 +1,5 @@
-{"nested":{"data":true}}
+{
+  "nested": {
+    "data": true
+  }
+}

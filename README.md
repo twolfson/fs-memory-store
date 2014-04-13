@@ -42,10 +42,20 @@ store.set('hello', {world: true}, function (err) {
 ```
 
 ## Documentation
-_(Coming soon)_
+`fs-memory-store` returns `Store` as its `module.exports`.
 
-## Examples
-_(Coming soon)_
+### `Store(dir, options)`
+Constructor for a new store
+
+- dir `String`, Directory to generate our store inside of
+- options `Object`, Container for options/flags
+    - ext `String`, Extension to save values under. By default, this is `.json`
+    - stringify `Function`, Stringifier to pass values through when saving to disk
+        - By default, this is `JSON.stringify` with an indenation of 2
+    - parse `Function`, Parser to pass values through when loading from disk
+        - By default, this is `JSON.parse`
+
+
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint via [grunt](https://github.com/gruntjs/grunt) and test via `npm test`.

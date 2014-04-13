@@ -1,4 +1,5 @@
 // Load in dependencies and library
+var expect = require('chai').expect;
 var fixtureUtils = require('mocha-fixture-dir')(require('fixture-dir'));
 var Store = require('../');
 
@@ -47,9 +48,12 @@ var storeUtils = {
 describe('An `fs-memory-store`', function () {
   describe('loading a non-existent value (from memory and disk)', function () {
     fixtureUtils.mkdir({folderName: 'non-existent'});
+    storeUtils.init({directory: '/tmp/fs-memory-store-tests/non-existent'});
+    storeUtils.get('nothing');
 
     it('calls back with `null`', function () {
-
+      expect(this.err).to.equal(null);
+      expect(this.val).to.equal(null);
     });
   });
 

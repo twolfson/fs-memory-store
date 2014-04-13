@@ -60,9 +60,18 @@ describe('An `fs-memory-store`', function () {
     });
   });
 
-  describe.skip('loading an existent value from disk', function () {
-    it('retrieves the value', function () {
+  describe('loading an existent value from disk', function () {
+    fixtureUtils.mkdir({
+      folderName: 'existent',
+      copyFrom: __dirname + '/test-files/existent'
+    });
+    storeUtils.init();
+    storeUtils.get('hello');
 
+    it('retrieves the value', function () {
+      console.log(this.err);
+      expect(this.err).to.equal(null);
+      expect(this.val).to.deep.equal({world: true});
     });
   });
 

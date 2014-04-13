@@ -179,8 +179,15 @@ describe('A deep object saved to memory', function () {
   });
 
   describe('when a cache-get value is modified', function () {
-    it('does not effect the cached value', function () {
+    storeUtils.get('hello');
+    before(function () {
+      this.val.headers.hai = true;
+    });
+    storeUtils.get('hello');
 
+    it('does not effect the cached value', function () {
+      expect(this.err).to.equal(null);
+      expect(this.val).to.deep.equal({headers: {host: '1234'}});
     });
   });
 });

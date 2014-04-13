@@ -156,10 +156,25 @@ describe('An existent value on disk', function () {
 });
 
 // DEV: Assert that we do not have any contamination from either side to our in-memory cache
-describe.skip('A deep object saved to memory', function () {
-  describe('when the source value is modified', function () {
-    it('does not effect the cached value', function () {
+describe('A deep object saved to memory', function () {
+  fixtureUtils.mkdir({
+    folderName: 'deep-object'
+  });
+  storeUtils.init();
+  before(function (done) {
+    this.obj = {headers: {host: '1234'}};
+    this.store.set('hello', this.obj, done);
+  });
 
+  describe('when the source value is modified', function () {
+    before(function () {
+      this.obj.headers.hai = true;
+    });
+    storeUtils.get('hello');
+
+    it('does not effect the cached value', function () {
+      expect(this.err).to.equal(null);
+      expect(this.val).to.deep.equal({headers: {host: '1234'}});
     });
   });
 

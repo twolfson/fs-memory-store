@@ -1,4 +1,5 @@
 // Load in dependencies and library
+var fs = require('fs');
 var expect = require('chai').expect;
 var extend = require('obj-extend');
 var fixtureUtils = require('mocha-fixture-dir')(require('fixture-dir'));
@@ -76,27 +77,21 @@ describe('An `fs-memory-store`', function () {
 
   describe('saving a value', function () {
     fixtureUtils.mkdir({
-      folderName: 'save',
-      copyFrom: __dirname + '/test-files/existent'
+      folderName: 'save'
     });
     storeUtils.init();
-    storeUtils.get('hello');
+    storeUtils.set('hello', {moon: true});
 
     it('does not have any errors', function () {
-
+      expect(this.err).to.equal(null);
     });
 
-    describe('loading the value from memory', function () {
-      it('loads its value', function () {
-
-      });
+    it('writes the file to disk', function () {
+      var files = fs.readdirSync(this.dir.path);
+      expect(files).to.deep.equal(['hello.json']);
     });
-  });
-});
 
-describe.skip('A non-existent value from disk', function () {
-  describe('when written', function () {
-    describe('and loaded again', function () {
+    describe.skip('loading the value from memory', function () {
       it('loads its value', function () {
 
       });

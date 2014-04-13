@@ -12,9 +12,8 @@ fixtureUtils.init('fs-memory-store-tests');
 var storeUtils = {
   init: function (options) {
     before(function createStore () {
-      // By default, use the temporary `fixtureUtils` directory
-      var params = extend({dir: this.dir.path}, options);
-      this.store = new Store(params);
+      // Generate a store in the temporary `fixtureUtils` directory
+      this.store = new Store(this.dir.path, options);
     });
     after(function cleanupStore () {
       delete this.store;
@@ -114,7 +113,7 @@ describe('A non-existent value from disk', function () {
 
     describe('and loaded from disk', function () {
       before(function (done) {
-        var store = new Store({dir: this.dir.path});
+        var store = new Store(this.dir.path);
         var that = this;
         store.get('hello', function (err, val) {
           that.val = val;
@@ -140,7 +139,7 @@ describe('An existent value on disk', function () {
 
     describe('and loaded again', function () {
       before(function (done) {
-        var store = new Store({dir: this.dir.path});
+        var store = new Store(this.dir.path);
         var that = this;
         store.get('hello', function (err, val) {
           that.val = val;

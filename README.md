@@ -55,7 +55,23 @@ Constructor for a new store
     - parse `Function`, Parser to pass values through when loading from disk
         - By default, this is `JSON.parse`
 
+#### `Store#get(key, cb)`
+Retrieve an item from memory with a fallback to disk.
 
+- key `String`, Identifier to retrieve item by
+- cb `Function`, Error-first callback function to receive item value
+    - Signature should be `(err, val)`
+    - err `Error|null`, If there was an error, this will be it
+    - val `Mixed|null`, If the value was found, this will be it. If it was not found, this will be `null`.
+
+#### `Store#set(key, val, cb)`
+Save an item to memory and disk
+
+- key `String`, Identifier to save item under
+- val `Mixed`, Value to save under the `key`
+- cb `Function`, Error-first callback function to handle errors
+    - Signature should be `(err)`
+    - err `Error|null`, If there was an error, this will be it
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint via [grunt](https://github.com/gruntjs/grunt) and test via `npm test`.

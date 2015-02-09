@@ -1,7 +1,7 @@
 {
   "name": "fs-memory-store",
   "description": "Filesystem store with in-memory cache",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "homepage": "https://github.com/twolfson/fs-memory-store",
   "author": {
     "name": "Todd Wolfson",

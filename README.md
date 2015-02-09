@@ -9,7 +9,7 @@ This was built for usage with [`eight-track`][], an HTTP fixture library. It is 
 ## Getting Started
 Install the module with: `npm install fs-memory-store`
 
-```javascript
+```js
 // Generate a store inside of `http-fixtures`
 var Store = require('fs-memory-store');
 var store = new Store(__dirname + '/http-fixtures');
@@ -69,6 +69,14 @@ Save an item to memory and disk
 
 - key `String`, Identifier to save item under
 - val `Mixed`, Value to save under the `key`
+- cb `Function`, Error-first callback function to handle errors
+    - Signature should be `(err)`
+    - err `Error|null`, If there was an error, this will be it
+
+#### `Store#delete(key, cb)`
+Delete an item from memory and disk
+
+- key `String`, Identifier to delete item under
 - cb `Function`, Error-first callback function to handle errors
     - Signature should be `(err)`
     - err `Error|null`, If there was an error, this will be it

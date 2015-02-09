@@ -110,6 +110,32 @@ describe('An `fs-memory-store`', function () {
         expect(this.val).to.deep.equal({moon: true});
       });
     });
+
+    describe('loading the value from memory', function () {
+      storeUtils.get('hello');
+
+      it('loads its value', function () {
+        expect(this.err).to.equal(null);
+        expect(this.val).to.deep.equal({moon: true});
+      });
+
+      describe('deleting the value from memory', function () {
+        storeUtils['delete']('hello');
+
+        it('does not have any errors', function () {
+          expect(this.err).to.equal(null);
+        });
+
+        describe('loading the value from memory', function () {
+          storeUtils.get('hello');
+
+          it('loads nothing', function () {
+            expect(this.err).to.equal(null);
+            expect(this.val).to.equal(null);
+          });
+        });
+      });
+    });
   });
 });
 
@@ -139,6 +165,7 @@ describe('A non-existent value from disk', function () {
     });
   });
 });
+
 describe('An existent value on disk', function () {
   fixtureUtils.mkdir({
     folderName: 'existent-disk',

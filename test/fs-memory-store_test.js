@@ -44,6 +44,18 @@ var storeUtils = {
     after(function cleanupError () {
       delete this.err;
     });
+  },
+  delete: function (key) {
+    before(function deleteValue (done) {
+      var that = this;
+      this.store['delete'](key, function handleDelete (err) {
+        that.err = err;
+        done();
+      });
+    });
+    after(function cleanupError () {
+      delete this.err;
+    });
   }
 };
 

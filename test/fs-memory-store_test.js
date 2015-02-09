@@ -162,6 +162,30 @@ describe('A non-existent value from disk', function () {
       it('loads its value', function () {
         expect(this.val).to.deep.equal({sun: true});
       });
+
+      describe('and deleted from disk', function () {
+        storeUtils['delete']('hello');
+
+        it('has no errors', function () {
+          expect(this.err).to.equal(null);
+        });
+
+        describe('and loaded from disk', function () {
+          before(function (done) {
+            var store = new Store(this.dir.path);
+            var that = this;
+            store.get('hello', function (err, val) {
+              that.val = val;
+              done(err);
+            });
+          });
+
+          it('loads nothing', function () {
+            expect(this.err).to.equal(null);
+            expect(this.val).to.equal(null);
+          });
+        });
+      });
     });
   });
 });

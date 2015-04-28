@@ -33,6 +33,20 @@ var storeUtils = {
       delete this.val;
     });
   },
+  keys: function (pattern) {
+    before(function getKeys (done) {
+      var that = this;
+      this.store.keys(pattern, function handleGet (err, keys) {
+        that.err = err;
+        that.keys = keys;
+        done();
+      });
+    });
+    after(function cleanupKeys () {
+      delete this.err;
+      delete this.keys;
+    });
+  },
   set: function (key, val) {
     before(function setValue (done) {
       var that = this;

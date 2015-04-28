@@ -151,6 +151,20 @@ describe('An `fs-memory-store`', function () {
       });
     });
   });
+
+  describe('resolving keys from an existent store from disk', function () {
+    fixtureUtils.mkdir({
+      folderName: 'existent',
+      copyFrom: __dirname + '/test-files/existent'
+    });
+    storeUtils.init();
+    storeUtils.keys('*');
+
+    it('retrieves the keys', function () {
+      expect(this.err).to.equal(null);
+      expect(this.keys).to.deep.equal(['hello']);
+    });
+  });
 });
 
 // DEV: Previously, we tested loading from memory, now it is from disk

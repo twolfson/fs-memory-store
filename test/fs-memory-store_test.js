@@ -303,3 +303,19 @@ describe('A deep object loaded from disk', function () {
   });
 });
 
+describe('A store using a folder name as part of its key', function () {
+  fixtureUtils.mkdir({
+    folderName: 'nested-keys-disk',
+    copyFrom: __dirname + '/test-files/nested-keys-disk'
+  });
+  storeUtils.init();
+
+  describe('when resolving keys', function () {
+    storeUtils.keys('hello/*');
+
+    it('resolves nested keys fine', function () {
+      expect(this.err).to.equal(null);
+      expect(this.keys).to.deep.equal(['hello/world']);
+    });
+  });
+});
